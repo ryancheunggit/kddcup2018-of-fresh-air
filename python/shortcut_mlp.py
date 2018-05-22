@@ -212,7 +212,7 @@ def fit_predict(city, sub, w_train_data, train_data, train_split_date, history_l
         for idx, row in tqdm(predictions.iterrows()):
             values = row[:48].values
             sub.loc[sub.test_id.isin([row['stationId'] + '#' + str(i) for i in range(48)]), row['measure']] = values
-        subs.append(sub[SUB_COLS])
+        subs.append(sub[SUB_COLS].copy())
 
     vprint(2, 'mean {}, std {}'.format(np.mean(min_valid_smape), np.std(min_valid_smape)))
 
