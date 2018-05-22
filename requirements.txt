@@ -7,5 +7,4 @@ pystan==2.17.1.0
 tensorflow==1.4.1
 Keras==2.1.4
 jupyter==1.0.0
-bokeh==0.12.10
 lightgbm==2.0.12              
