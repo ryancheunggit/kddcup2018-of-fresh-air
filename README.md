@@ -1,4 +1,4 @@
-Hooray~! my fellow KDD competitors. I entered this competition on day 1 and very quickly established a reasonable baseline. Due to some personal side of things, I practically stopped improving my solutions since the beginning of May. Even though my methods did not work really well compared to many top players in phase 2, but I think my solution may worth sharing due to it is relative simplicity. I did not touch the `meo` data at all, and one of my models is just calculating medians.
+Hooray~! fellow KDD competitors. I entered this competition on day 1 and very quickly established a reasonable baseline. Due to some personal side of things, I practically stopped improving my solutions since the beginning of May. Even though my methods did not work really well compared to many top players in phase 2, but I think my solution may worth sharing due to it is relative simplicity. I did not touch the `meo` data at all, and one of my models is just calculating medians.
 
 ### Alternative data source
 For new hourly air quality data, as shared in the forum, I am using [this](https://biendata.com/forum/view_post_category/102) for London and [this](https://biendata.com/forum/view_post_category/94) for Beijing instead of the API from the organizer.  
@@ -34,7 +34,7 @@ The input to the neural network are concatenated (1) raw history readings, (2) m
 
 The output layer in the network is a dense layer with 48 units, each corresponding to an hourly reading in the next 48 hours.    
 
-The model is trained directly using smape as loss function with Adam optimizer. I tried standardizing inputs into zero mean and unit variance, but it will cause a problem when used together with smape loss, thus I tied switching to a clipped MAE loss, which produced similar results compared to raw input with smape loss.    
+The model is trained directly using smape as loss function with Adam optimizer. I tried standardizing inputs into zero mean and unit variance, but it will cause a problem when used together with smape loss, thus I tried switching to a clipped version MAE loss, which produced similar results compared to raw input with smape loss.    
 
 The model can be trained on CPU only machine in very short time.    
 
@@ -50,8 +50,7 @@ I split the history data into (X, y) pairs based on a splitting day, and then mo
 
 I used groupedCV split on the concatenated dataset to do cross-validation so that measures from one station don't end up in both training and validation set. During training, the batch size is specified so that data in the batch all based on the same splitting day. I did this trying to preventing information leaking.
 
-I got average smape scores 0.42~44 for Beijing and 0.31-0.33 for London in my local validation setting. Which I think is pretty aligned with how it averages in May.
-
+I got average smape scores 0.40~44 for Beijing and 0.30-0.34 for London in my local validation setting. Which I think is pretty aligned with how it averages out through May.
 
 ### Closing   
 Without utilizing any other weather information or integrating any sort of forecasts, all my models failed miserably for events like the sudden peak on May 27th in Beijing.
